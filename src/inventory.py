@@ -48,10 +48,6 @@ class Inventory:
 
         return InventoryRecord(None, 0)
 
-    def print_metals(self):
-        for metal, count in [(record.item, record.count) for record in self._records.values() if isinstance(record.item, Metal)]:
-            print("%s (%d) x%d" % (metal.name, metal.rarity, count))
-
     def find_metals(self) -> [Metal]:
         metals = [record for record in self._records.values() if isinstance(record.item, Metal)]
         return sorted(metals, key=attrgetter("count"), reverse=True)
