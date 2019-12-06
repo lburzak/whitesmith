@@ -48,10 +48,16 @@ class Inventory:
 
         return InventoryRecord(None, 0)
 
-    def find_metals(self) -> [Metal]:
+    def find_metals(self, sort=False) -> [InventoryRecord]:
         metals = [record for record in self._records.values() if isinstance(record.item, Metal)]
-        return sorted(metals, key=attrgetter("count"), reverse=True)
+        if sort:
+            return sorted(metals, key=attrgetter("count"), reverse=True)
+        else:
+            return metals
 
-    def find_products(self) -> [InventoryRecord]:
+    def find_products(self, sort=False) -> [InventoryRecord]:
         products = [record for record in self._records.values() if isinstance(record.item, Product)]
-        return sorted(products, key=attrgetter("count"), reverse=True)
+        if sort:
+            return sorted(products, key=attrgetter("count"), reverse=True)
+        else:
+            return products
