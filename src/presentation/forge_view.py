@@ -15,6 +15,7 @@ from player import Player
 from product import Product
 from recipe import Recipe
 from resources import Resources
+from util import float_as_percent
 from view import View, KeyListener
 
 
@@ -75,7 +76,7 @@ class ForgeView(View, KeyListener):
         if self.current_choice.metal and self.current_choice.recipe:
             difficulty = get_effective_difficulty(self.current_choice.metal.item, self.current_choice.recipe)
             chance = calculate_forging_success_chance(level, difficulty)
-            chance_info = "Szansa na sukces: %f" % chance
+            chance_info = "Szansa na sukces: %s" % float_as_percent(chance)
 
         if self.last_product:
             product_info = "\n\n\tWytworzyłeś: [%s (%d)]!" % (self.last_product.name, self.last_product.rating)
