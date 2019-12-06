@@ -29,12 +29,20 @@ class Inventory:
                 return record
         return None
 
+    def remove_record(self, record: InventoryRecord):
+        for key in self._records.keys():
+            if self._records[key] == record:
+                del self._records[key]
+                break
+
     def take_item(self, item: Any, amount: int = 1) -> InventoryRecord:
         record = self.find_record_by_item(item)
 
         if record:
             if record.count >= amount:
                 record.count -= amount
+                if record.count == 0:
+                    self.remove_record(record)
                 return InventoryRecord(record.item, amount)
 
         return InventoryRecord(record.item, 0)

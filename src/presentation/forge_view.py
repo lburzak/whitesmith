@@ -107,7 +107,7 @@ class ForgeView(View, KeyListener):
             self.attempt_forging()
 
     def attempt_forging(self):
-        if self.current_choice.recipe and self.current_choice.metal:
+        if self.can_forge():
             self.last_product = produce(self.player, self.resources, self.current_choice.recipe, self.current_choice.metal.item)
 
     def handle_up(self):
