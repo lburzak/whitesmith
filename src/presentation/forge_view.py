@@ -69,13 +69,12 @@ class ForgeView(View, KeyListener):
         return "Wybierz metal: \n\n" + self.metals_list_view.render()
 
     def render_forging(self):
-        level = 10
         product_info = ""
         chance_info = "Wybierz przepis i metal..."
 
         if self.current_choice.metal and self.current_choice.recipe:
             difficulty = get_effective_difficulty(self.current_choice.metal.item, self.current_choice.recipe)
-            chance = calculate_forging_success_chance(level, difficulty)
+            chance = calculate_forging_success_chance(self.player.forging_level, difficulty)
             chance_info = "Szansa na sukces: %s" % float_as_percent(chance)
 
         if self.last_product:
