@@ -6,6 +6,7 @@ from inventory import Inventory
 from inventory_view import InventoryView
 from mining import Mine
 from metal import Metal
+from player import Player
 from recipe import Recipe
 from resources import generate_resources
 
@@ -15,8 +16,9 @@ from views_root import ViewsRoot
 res = generate_resources()
 mine = Mine(res)
 inv = Inventory()
+player = Player(30, inv)
 
-ViewsRoot(inv, mine).start()
+ViewsRoot(player, mine, res).start()
 
 # LV = 70
 # recipe = Recipe("test", 20, 2)

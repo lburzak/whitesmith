@@ -9,6 +9,8 @@ from inventory_view import InventoryView
 from menu_view import MenuView
 from mine_view import MineView
 from mining import Mine
+from player import Player
+from resources import Resources
 from view import View, KeyListener
 
 
@@ -17,11 +19,11 @@ class ViewsRoot:
     controls_listener: KeyListener
     routes: Dict[str, View]
 
-    def __init__(self, inv: Inventory, mine: Mine):
+    def __init__(self, player: Player, mine: Mine, resources: Resources):
         self.routes = {
-            "Magazyn": InventoryView(self.change_handler, inv),
-            "Kopalnia": MineView(self.change_handler, mine, inv),
-            "Kuźnia": ForgeView(self.change_handler, inv)
+            "Magazyn": InventoryView(self.change_handler, player.inventory),
+            "Kopalnia": MineView(self.change_handler, mine, player.inventory),
+            "Kuźnia": ForgeView(self.change_handler, player, resources)
         }
 
         self.routes["Menu"] = MenuView(self.change_handler, self.open_route, list(self.routes.keys()))

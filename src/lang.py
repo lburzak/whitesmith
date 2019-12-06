@@ -7,16 +7,14 @@ consonants = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "r", "
 endings = ["chit", "ryt", "mit", "t", "ks"]
 
 
-def noun_to_adj(noun: str) -> str:
-    female = False
-    if noun[-1] == 'a':
-        female = True
-
+def noun_to_adj(noun: str, target_noun: str) -> str:
     if noun[-1] in vowels:
         noun = noun[:-1]
 
-    if female:
+    if target_noun[-1] == 'a':
         return noun + "owa"
+    elif target_noun[-1] == 'e' or target_noun[-1] == 'o':
+        return noun + "owe"
     else:
         return noun + "owy"
 

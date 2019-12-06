@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from metal import Metal
 from resources import ResourceRecord
 
@@ -22,12 +22,21 @@ class Inventory:
     def get_records(self) -> Dict[int, InventoryRecord]:
         return self._records
 
-    def contains(self, resource_id: int, amount: int = 1) -> bool:
-        record = self._records.get(resource_id)
-        return record and record.count >= amount
+    def findRecordByItem(self, item: Any) -> Optional[InventoryRecord]:
+        for record in self._records.values():
+            if record.item == item:
+                return record
+        return None
 
-    def take_item(self, resource_id: int, amount: int = 1):
-        self
+    def take_item(self, item: Any, amount: int = 1) -> InventoryRecord:
+        record = self.findRecordByItem(item)
+
+        if record:
+            if record.count >= amount:
+                record.count -= amount
+                return InventoryRecord(record.item, amount)
+
+        return InventoryRecord(record.item, 0)
 
     def print_metals(self):
         for metal, count in [(record.item, record.count) for record in self._records.values() if isinstance(record.item, Metal)]:

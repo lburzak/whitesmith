@@ -7,12 +7,14 @@ from readchar import key
 
 from chance import calculate_forging_success_chance
 from data.recipes import recipes
-from forging import forge, get_effective_difficulty
+from forging import forge, get_effective_difficulty, produce
 from inventory import Inventory, InventoryRecord
 from list_view import ListView
 from metal import Metal
+from player import Player
 from product import Product
 from recipe import Recipe
+from resources import Resources
 from view import View, KeyListener
 
 
@@ -30,17 +32,19 @@ class ForgingStage(Enum):
 
 class ForgeView(View, KeyListener):
     loaded_recipes = recipes
-    inventory: Inventory
+    player: Player
     recipes_list_view = ListView([recipe.product_name.capitalize() for recipe in loaded_recipes])
     metals_list_view = ListView([])
     on_change: Callable
     current_choice = ForgingChoice(None, None)
     current_stage = ForgingStage.CHOOSING_RECIPE
     last_product: Optional[Product] = None
+    resources: Resources
 
-    def __init__(self, on_change: Callable, inventory: Inventory):
-        self.inventory = inventory
+    def __init__(self, on_change: Callable, player: Player, resources: Resources):
+        self.player = player
         self.on_change = on_change
+        self.resources = resources
 
     def can_forge(self) -> bool:
         return self.current_choice.metal and self.current_choice.recipe and self.current_choice.recipe.size <= self.current_choice.metal.count
@@ -59,18 +63,23 @@ class ForgeView(View, KeyListener):
         return "Wybierz przepis: \n\n" + self.recipes_list_view.render()
 
     def render_choosing_metal(self) -> str:
-        records = sorted(list(self.inventory.get_records().values()), key=attrgetter("count"), reverse=True)
+        records = sorted(list(self.player.inventory.get_records().values()), key=attrgetter("count"), reverse=True)
         self.metals_list_view.items = ["%dx %s" % (record.count, record.item.name) for record in records]
         return "Wybierz metal: \n\n" + self.metals_list_view.render()
 
     def render_forging(self):
         level = 10
-        difficulty = get_effective_difficulty(self.current_choice.metal.item, self.current_choice.recipe)
-        chance = calculate_forging_success_chance(level, difficulty)
-        chance_info = "Szansa na sukces: %f" % chance
         product_info = ""
+        chance_info = "Wybierz przepis i metal..."
+
+        if self.current_choice.metal and self.current_choice.recipe:
+            difficulty = get_effective_difficulty(self.current_choice.metal.item, self.current_choice.recipe)
+            chance = calculate_forging_success_chance(level, difficulty)
+            chance_info = "Szansa na sukces: %f" % chance
+
         if self.last_product:
             product_info = "\n\n\tWytworzyłeś: [%s (%d)]!" % (self.last_product.name, self.last_product.rating)
+
         return chance_info + product_info
 
     def render_choice(self) -> str:
@@ -92,14 +101,14 @@ class ForgeView(View, KeyListener):
         if self.current_stage == ForgingStage.CHOOSING_RECIPE:
             self.current_choice.recipe = self.loaded_recipes[self.recipes_list_view.pos]
         elif self.current_stage == ForgingStage.CHOOSING_METAL:
-            records = sorted(list(self.inventory.get_records().values()), key=attrgetter("count"), reverse=True)
+            records = sorted(list(self.player.inventory.get_records().values()), key=attrgetter("count"), reverse=True)
             self.current_choice.metal = records[self.metals_list_view.pos]
         elif self.current_stage == ForgingStage.FORGING:
             self.attempt_forging()
 
     def attempt_forging(self):
         if self.current_choice.recipe and self.current_choice.metal:
-            self.last_product = forge(10, self.current_choice.recipe, self.current_choice.metal.item)
+            self.last_product = produce(self.player, self.resources, self.current_choice.recipe, self.current_choice.metal.item)
 
     def handle_up(self):
         if self.current_stage == ForgingStage.CHOOSING_RECIPE:
