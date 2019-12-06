@@ -1,9 +1,10 @@
 from inventory import Inventory
-from leveling import ForgingGauge
+from leveling import ForgingGauge, MiningGauge
 
 
 class Player:
     forging_gauge: ForgingGauge = ForgingGauge(1, 0)
+    mining_gauge: MiningGauge = MiningGauge(1, 0)
     inventory: Inventory
     money: int
 
@@ -32,4 +33,10 @@ class Player:
 
     def on_forging_failure(self, difficulty):
         self.forging_gauge.grant_xp(difficulty // 8)
+
+    def get_mining_level(self):
+        return self.mining_gauge.level
+
+    def on_mining(self, rarity: int):
+        self.mining_gauge.grant_xp(rarity // 7)
 

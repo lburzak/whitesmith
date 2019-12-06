@@ -24,3 +24,8 @@ class LevelGauge:
 class ForgingGauge(LevelGauge):
     def get_xp_needed(self) -> int:
         return self.level * 100
+
+
+class MiningGauge(LevelGauge):
+    def get_xp_needed(self) -> int:
+        return self.level * 50

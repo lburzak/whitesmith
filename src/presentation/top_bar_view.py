@@ -15,10 +15,13 @@ class TopBarView:
         self.temporary_message = "%s LEVEL UP! (%d => %d)" % (skill, prev_lvl, curr_lvl)
 
     def render(self, current_route: str) -> str:
-        return "< %s >\t%d$\tKowalstwo: %d (%d/%d XP)" % (
+        return "< %s >\t%d$\tKowalstwo: %d (%d/%d XP)\t\tGórnictwo: %d (%d/%d XP)" % (
             current_route,
             self.player.money,
             self.player.forging_gauge.level,
             self.player.forging_gauge.xp,
-            self.player.forging_gauge.get_xp_needed()
+            self.player.forging_gauge.get_xp_needed(),
+            self.player.mining_gauge.level,
+            self.player.mining_gauge.xp,
+            self.player.mining_gauge.get_xp_needed()
         )

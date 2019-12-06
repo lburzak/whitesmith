@@ -22,7 +22,7 @@ viewsRoot.top_bar_view = TopBarView(player)
 
 routes = {
     "Magazyn": InventoryView(viewsRoot.change_handler, player.inventory),
-    "Kopalnia": MineView(viewsRoot.change_handler, mine, player.inventory),
+    "Kopalnia": MineView(viewsRoot.change_handler, mine, player),
     "Kuźnia": ForgeView(viewsRoot.change_handler, player, resources),
     "Bazar": MarketView(viewsRoot.change_handler, player, market),
 }

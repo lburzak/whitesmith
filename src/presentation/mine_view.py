@@ -4,23 +4,24 @@ from readchar import key
 
 from inventory import Inventory
 from mining import Mine
+from player import Player
 from view import View, KeyListener
 
 
 class MineView(View, KeyListener):
     last_mining_result = []
     mine: Mine
-    inventory: Inventory
+    player: Player
     on_change: Callable
 
-    def __init__(self, on_change: Callable, mine: Mine, inventory: Inventory):
+    def __init__(self, on_change: Callable, mine: Mine, player: Player):
         self.mine = mine
-        self.inventory = inventory
+        self.player = player
         self.on_change = on_change
 
     def on_key(self, k: key):
         if k == key.SPACE:
-            self.last_mining_result = self.mine.mine(self.inventory)
+            self.last_mining_result = self.mine.mine(self.player)
             self.on_change()
 
     def render(self) -> str:
