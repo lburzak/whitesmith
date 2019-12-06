@@ -4,6 +4,7 @@ from readchar import readkey
 
 from inventory import Inventory
 from inventory_view import InventoryView
+from market import Market
 from mining import Mine
 from metal import Metal
 from player import Player
@@ -16,9 +17,15 @@ from views_root import ViewsRoot
 res = generate_resources()
 mine = Mine(res)
 inv = Inventory()
-player = Player(30, inv)
+market = Market()
+player = Player(30, inv, 0)
 
-ViewsRoot(player, mine, res).start()
+ViewsRoot(
+    player=player,
+    mine=mine,
+    resources=res,
+    market=market
+).start()
 
 # LV = 70
 # recipe = Recipe("test", 20, 2)

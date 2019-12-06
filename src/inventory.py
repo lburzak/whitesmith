@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from operator import attrgetter
 from typing import Any, Dict, Optional
 from metal import Metal
+from product import Product
 from resources import ResourceRecord
 
 
@@ -45,7 +46,7 @@ class Inventory:
                     self.remove_record(record)
                 return InventoryRecord(record.item, amount)
 
-        return InventoryRecord(record.item, 0)
+        return InventoryRecord(None, 0)
 
     def print_metals(self):
         for metal, count in [(record.item, record.count) for record in self._records.values() if isinstance(record.item, Metal)]:
@@ -54,3 +55,7 @@ class Inventory:
     def find_metals(self) -> [Metal]:
         metals = [record for record in self._records.values() if isinstance(record.item, Metal)]
         return sorted(metals, key=attrgetter("count"), reverse=True)
+
+    def find_products(self) -> [InventoryRecord]:
+        products = [record for record in self._records.values() if isinstance(record.item, Product)]
+        return sorted(products, key=attrgetter("count"), reverse=True)
