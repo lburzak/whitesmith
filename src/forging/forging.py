@@ -13,7 +13,7 @@ from resources import Resources
 RATING_MULTIPLIER_METAL = 20
 RATING_MULTIPLIER_DIFFICULTY = 20
 RATING_MULTIPLIER_SIZE = 4
-SCRAP = Product(name="Scrap", rating=0)
+SCRAP = Product(name="Odłamek", rating=0)
 
 
 def randomize_rate(r: int):
@@ -39,7 +39,7 @@ def forge(level: int, recipe: Recipe, metal: Metal) -> Product:
         name = lang.noun_to_adj(metal.name, recipe.product_name).capitalize() + " " + recipe.product_name.capitalize()
         return Product(name=name, rating=actual_rate)
     else:
-        return Product(name="Scrap", rating=0)
+        return SCRAP
 
 
 def get_effective_difficulty(metal: Metal, recipe: Recipe):

@@ -6,6 +6,7 @@ from readchar import key
 from inventory import Inventory
 from list_view import ListView
 from metal import Metal
+from product import Product
 from view import View, KeyListener
 
 
@@ -13,6 +14,8 @@ class ItemInspectView:
     def render(self, item) -> str:
         if isinstance(item, Metal):
             return "[Metal] %s:\n\tTrudność: %d\n\tRzadkość: %d" % (item.name, item.difficulty, item.rarity)
+        elif isinstance(item, Product):
+            return "[Produkt] %s:\n\tOcena: %d" % (item.name, item.rating)
         else:
             return ""
 
