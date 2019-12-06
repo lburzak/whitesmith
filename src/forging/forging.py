@@ -50,7 +50,7 @@ def produce(player: Player, resources: Resources, recipe: Recipe, metal: Metal) 
     inv_record = player.inventory.take_item(metal, recipe.size)
     product = None
     if inv_record.count >= recipe.size:
-        product = forge(player.forging_level, recipe, metal)
+        product = forge(player.get_forging_level(), recipe, metal)
         res_record = resources.findByData(product)
         if res_record is None:
             res_record = resources.register(product)

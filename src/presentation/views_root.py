@@ -13,13 +13,16 @@ from mine_view import MineView
 from mining import Mine
 from player import Player
 from resources import Resources
+from top_bar_view import TopBarView
 from view import View, KeyListener
 
 
 class ViewsRoot:
     _current_view: View
+    _current_route: str
     _controls_listener: KeyListener
     _routes: Dict[str, View]
+    top_bar_view: TopBarView
 
     def set_routes(self, routes: Dict[str, View]):
         self._routes = routes
@@ -30,12 +33,13 @@ class ViewsRoot:
 
     def change_handler(self):
         os.system("clear")
-        print(self._current_view.render())
+        print(self.top_bar_view.render(self._current_route) + "\n\n" + self._current_view.render())
 
     def open_route(self, route_name: str):
         view = self._routes.get(route_name)
         if view:
             self.set_view(view)
+            self._current_route = route_name
             self.change_handler()
         else:
             raise Exception("No such route: %s" % route_name)
@@ -45,6 +49,7 @@ class ViewsRoot:
             raise Exception("Routes not set.")
         self.open_route(initial_route_name)
         self.change_handler()
+
         while True:
             c = readkey()
             if c == 'q':

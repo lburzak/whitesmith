@@ -7,7 +7,7 @@ from readchar import key
 
 from chance import calculate_forging_success_chance
 from data.recipes import recipes
-from forging import forge, get_effective_difficulty, produce
+from forging import forge, get_effective_difficulty, produce, SCRAP
 from inventory import Inventory, InventoryRecord
 from list_view import ListView
 from metal import Metal
@@ -74,7 +74,7 @@ class ForgeView(View, KeyListener):
 
         if self.current_choice.metal and self.current_choice.recipe:
             difficulty = get_effective_difficulty(self.current_choice.metal.item, self.current_choice.recipe)
-            chance = calculate_forging_success_chance(self.player.forging_level, difficulty)
+            chance = calculate_forging_success_chance(self.player.get_forging_level(), difficulty)
             chance_info = "Szansa na sukces: %s" % float_as_percent(chance)
 
         if self.last_product:
@@ -109,6 +109,11 @@ class ForgeView(View, KeyListener):
     def attempt_forging(self):
         if self.can_forge():
             self.last_product = produce(self.player, self.resources, self.current_choice.recipe, self.current_choice.metal.item)
+            difficulty = get_effective_difficulty(self.current_choice.metal.item, self.current_choice.recipe)
+            if self.last_product is not SCRAP:
+                self.player.on_forging_successful(difficulty)
+            else:
+                self.player.on_forging_failure(difficulty)
 
     def handle_up(self):
         if self.current_stage == ForgingStage.CHOOSING_RECIPE:
