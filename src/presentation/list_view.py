@@ -13,9 +13,9 @@ class ListView(View):
 
         for i in range(0, len(self.items)):
             if self.pos == i:
-                s += ">"
+                s += "> "
             else:
-                s += " "
+                s += "  "
             s += self.items[i] + "\n"
 
         return s
