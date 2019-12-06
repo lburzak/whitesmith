@@ -17,35 +17,33 @@ from view import View, KeyListener
 
 
 class ViewsRoot:
-    current_view: View
-    controls_listener: KeyListener
-    routes: Dict[str, View]
+    _current_view: View
+    _controls_listener: KeyListener
+    _routes: Dict[str, View]
 
-    def __init__(self, player: Player, mine: Mine, resources: Resources, market: Market):
-        self.routes = {
-            "Magazyn": InventoryView(self.change_handler, player.inventory),
-            "Kopalnia": MineView(self.change_handler, mine, player.inventory),
-            "Kuźnia": ForgeView(self.change_handler, player, resources),
-            "Bazar": MarketView(self.change_handler, player, market)
-        }
-
-        self.routes["Menu"] = MenuView(self.change_handler, self.open_route, list(self.routes.keys()))
-
-        self.open_route("Menu")
+    def set_routes(self, routes: Dict[str, View]):
+        self._routes = routes
 
     def set_view(self, new_view: Union[View, KeyListener]):
-        self.current_view = new_view
-        self.controls_listener = new_view
+        self._current_view = new_view
+        self._controls_listener = new_view
 
     def change_handler(self):
         os.system("clear")
-        print(self.current_view.render())
+        print(self._current_view.render())
 
     def open_route(self, route_name: str):
-        self.set_view(self.routes[route_name])
-        self.change_handler()
+        view = self._routes.get(route_name)
+        if view:
+            self.set_view(view)
+            self.change_handler()
+        else:
+            raise Exception("No such route: %s" % route_name)
 
-    def start(self):
+    def start(self, initial_route_name: str):
+        if not self._routes:
+            raise Exception("Routes not set.")
+        self.open_route(initial_route_name)
         self.change_handler()
         while True:
             c = readkey()
@@ -54,4 +52,4 @@ class ViewsRoot:
             elif c == key.BACKSPACE or c == key.ESC:
                 self.open_route("Menu")
             else:
-                self.controls_listener.on_key(c)
+                self._controls_listener.on_key(c)
