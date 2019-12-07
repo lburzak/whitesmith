@@ -37,8 +37,11 @@ class Resources:
 
 generator_conf = {
     "metals": {
-        Rarity.COMMON: 5,
-        Rarity.RARE: 3
+        Rarity.COMMON: 2,
+        Rarity.UNCOMMON: 3,
+        Rarity.RARE: 3,
+        Rarity.EPIC: 3,
+        Rarity.LEGENDARY: 2
     }
 }
 

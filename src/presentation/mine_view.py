@@ -1,11 +1,10 @@
 from typing import Callable
-
 from readchar import key
-
 from inventory import Inventory
 from mining import Mine
 from player import Player
 from view import View, KeyListener
+from item_display import item_to_string
 
 
 class MineView(View, KeyListener):
@@ -25,8 +24,8 @@ class MineView(View, KeyListener):
             self.on_change()
 
     def render(self) -> str:
-        names = [record.data.name for record in self.last_mining_result]
-        if len(names) == 0:
+        items = [item_to_string(record.data, embedded=True) for record in self.last_mining_result]
+        if len(items) == 0:
             return "Nic nie wykopałeś!"
         else:
-            return "Wykopałeś: \n\t" + "\n\t".join(names)
+            return "Wykopałeś: \n\t" + "\n\t".join(items)

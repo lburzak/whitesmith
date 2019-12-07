@@ -1,3 +1,5 @@
+import colorama
+
 from player import Player
 
 
@@ -15,7 +17,7 @@ class TopBarView:
         self.temporary_message = "%s LEVEL UP! (%d => %d)" % (skill, prev_lvl, curr_lvl)
 
     def render(self, current_route: str) -> str:
-        return "< %s >\t%d$\tKowalstwo: %d (%d/%d XP)\t\tGórnictwo: %d (%d/%d XP)" % (
+        return colorama.Style.BRIGHT + "< %s >\t%d$\tKowalstwo: %d (%d/%d XP)  \tGórnictwo: %d (%d/%d XP)" % (
             current_route,
             self.player.money,
             self.player.forging_gauge.level,
@@ -24,4 +26,4 @@ class TopBarView:
             self.player.mining_gauge.level,
             self.player.mining_gauge.xp,
             self.player.mining_gauge.get_xp_needed()
-        )
+        ) + colorama.Style.RESET_ALL
