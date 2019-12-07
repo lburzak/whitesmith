@@ -69,7 +69,7 @@ class ForgeView(View, KeyListener):
 
     def render_choosing_metal(self) -> str:
         records = self.player.inventory.find_metals()
-        selected_item = records[self.metals_list_view.pos].item
+        selected_item = records[self.metals_list_view.pos].item if len(records) > 0 else None
         metal_records = self.player.inventory.find_metals()
         self.metals_list_view.items = ["%dx %s" % (record.count, item_to_string(record.item)) for record in metal_records]
         return "Wybierz metal: \n\n" + self.metals_list_view.render() + "\n\n" + self.inspect_view.render(selected_item)
@@ -108,7 +108,8 @@ class ForgeView(View, KeyListener):
             self.current_choice.recipe = self.loaded_recipes[self.recipes_list_view.pos]
         elif self.current_stage == ForgingStage.CHOOSING_METAL:
             records = self.player.inventory.find_metals()
-            self.current_choice.metal = records[self.metals_list_view.pos]
+            if len(records) > 0:
+                self.current_choice.metal = records[self.metals_list_view.pos]
         elif self.current_stage == ForgingStage.FORGING:
             self.attempt_forging()
 
