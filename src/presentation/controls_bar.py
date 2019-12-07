@@ -1,6 +1,6 @@
 import colorama
 
-from presentation.keys_info import ROUTES_KEYS_INFO
+from data.keys_info import ROUTES_KEYS_INFO
 
 
 class ControlsBar:
