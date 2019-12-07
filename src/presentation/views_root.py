@@ -3,6 +3,7 @@ from typing import Union, Dict
 
 from readchar import readkey, key
 
+from controls_bar import ControlsBar
 from forge_view import ForgeView
 from inventory import Inventory
 from inventory_view import InventoryView
@@ -23,6 +24,8 @@ class ViewsRoot:
     _controls_listener: KeyListener
     _routes: Dict[str, View]
     top_bar_view: TopBarView
+    controls_bar = ControlsBar()
+    show_controls = False
 
     def set_routes(self, routes: Dict[str, View]):
         self._routes = routes
@@ -33,7 +36,8 @@ class ViewsRoot:
 
     def change_handler(self):
         os.system("clear")
-        print(self.top_bar_view.render(self._current_route) + "\n\n" + self._current_view.render())
+        controls_render = ("\n" + self.controls_bar.render(self._current_route)) if self.show_controls else "\n"
+        print(self.top_bar_view.render(self._current_route) + controls_render + "\n\n" + self._current_view.render())
 
     def open_route(self, route_name: str):
         view = self._routes.get(route_name)
@@ -54,6 +58,9 @@ class ViewsRoot:
             c = readkey()
             if c == 'q':
                 break
+            if c == '?':
+                self.show_controls = not self.show_controls
+                self.change_handler()
             elif c == key.BACKSPACE or c == key.ESC:
                 self.open_route("Menu")
             else:

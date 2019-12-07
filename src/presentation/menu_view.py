@@ -26,7 +26,8 @@ class MenuView(View, KeyListener):
         self.menu_list_view = ListView(routes)
 
     def render(self) -> str:
-        return self.menu_list_view.render()
+        hint = "Naciśnij '?' aby pokazać/ukryć pomoc.\n\n"
+        return hint + self.menu_list_view.render()
 
     def on_key(self, k: key):
         if k == key.UP:
