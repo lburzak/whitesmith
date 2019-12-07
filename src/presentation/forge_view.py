@@ -10,6 +10,7 @@ from data.recipes import recipes
 from forging import forge, get_effective_difficulty, produce, SCRAP
 from inventory import Inventory, InventoryRecord
 from item_display import item_to_string
+from item_inspect_view import ItemInspectView
 from list_view import ListView
 from metal import Metal
 from player import Player
@@ -42,6 +43,7 @@ class ForgeView(View, KeyListener):
     current_stage = ForgingStage.CHOOSING_RECIPE
     last_product: Optional[Product] = None
     resources: Resources
+    inspect_view = ItemInspectView()
 
     def __init__(self, on_change: Callable, player: Player, resources: Resources):
         self.player = player
@@ -62,12 +64,15 @@ class ForgeView(View, KeyListener):
         return self.render_choice() + "\n\n" + stage_render
 
     def render_choosing_recipe(self) -> str:
-        return "Wybierz przepis: \n\n" + self.recipes_list_view.render()
+        selected_item = self.loaded_recipes[self.recipes_list_view.pos]
+        return "Wybierz przepis: \n\n" + self.recipes_list_view.render() + "\n\n" + self.inspect_view.render(selected_item)
 
     def render_choosing_metal(self) -> str:
+        records = self.player.inventory.find_metals()
+        selected_item = records[self.metals_list_view.pos].item
         metal_records = self.player.inventory.find_metals()
         self.metals_list_view.items = ["%dx %s" % (record.count, item_to_string(record.item)) for record in metal_records]
-        return "Wybierz metal: \n\n" + self.metals_list_view.render()
+        return "Wybierz metal: \n\n" + self.metals_list_view.render() + "\n\n" + self.inspect_view.render(selected_item)
 
     def render_forging(self):
         product_info = ""

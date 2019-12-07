@@ -6,19 +6,8 @@ from readchar import key
 from inventory import Inventory
 from item_display import item_to_string
 from list_view import ListView
-from metal import Metal
-from product import Product
 from view import View, KeyListener
-
-
-class ItemInspectView:
-    def render(self, item) -> str:
-        if isinstance(item, Metal):
-            return "%s:\n\tTrudność: %d\n\tRzadkość: %d" % (item_to_string(item, type_tag=True), item.difficulty, item.rarity)
-        elif isinstance(item, Product):
-            return "%s:\n\tOcena: %d" % (item_to_string(item, type_tag=True), item.rating)
-        else:
-            return ""
+from item_inspect_view import ItemInspectView
 
 
 class InventoryView(View, KeyListener):
