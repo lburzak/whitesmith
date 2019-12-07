@@ -3,6 +3,7 @@ from typing import Callable
 from readchar import key
 
 from inventory import InventoryRecord
+from item_display import item_to_string
 from list_view import ListView
 from market import Market
 from player import Player
@@ -21,7 +22,7 @@ class MarketView(View, KeyListener):
         self.on_change = on_change
 
     def render(self) -> str:
-        items = ["%dx %s" % (record.count, record.item.name) for record in self.player.inventory.find_products()]
+        items = ["%dx %s" % (record.count, item_to_string(record.item)) for record in self.player.inventory.find_products()]
         self.sellable_goods_list_view.items = items
         return self.render_balance() + "\n\n" + self.sellable_goods_list_view.render()
 

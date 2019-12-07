@@ -14,9 +14,9 @@ from view import View, KeyListener
 class ItemInspectView:
     def render(self, item) -> str:
         if isinstance(item, Metal):
-            return "[Metal] %s:\n\tTrudność: %d\n\tRzadkość: %d" % (item.name, item.difficulty, item.rarity)
+            return "%s:\n\tTrudność: %d\n\tRzadkość: %d" % (item_to_string(item, type_tag=True), item.difficulty, item.rarity)
         elif isinstance(item, Product):
-            return "[Produkt] %s:\n\tOcena: %d" % (item.name, item.rating)
+            return "%s:\n\tOcena: %d" % (item_to_string(item, type_tag=True), item.rating)
         else:
             return ""
 

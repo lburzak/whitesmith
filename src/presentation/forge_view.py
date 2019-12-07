@@ -9,6 +9,7 @@ from chance import calculate_forging_success_chance
 from data.recipes import recipes
 from forging import forge, get_effective_difficulty, produce, SCRAP
 from inventory import Inventory, InventoryRecord
+from item_display import item_to_string
 from list_view import ListView
 from metal import Metal
 from player import Player
@@ -34,7 +35,7 @@ class ForgingStage(Enum):
 class ForgeView(View, KeyListener):
     loaded_recipes = recipes
     player: Player
-    recipes_list_view = ListView([recipe.product_name.capitalize() for recipe in loaded_recipes])
+    recipes_list_view = ListView([item_to_string(recipe) for recipe in loaded_recipes])
     metals_list_view = ListView([])
     on_change: Callable
     current_choice = ForgingChoice(None, None)
@@ -65,7 +66,7 @@ class ForgeView(View, KeyListener):
 
     def render_choosing_metal(self) -> str:
         metal_records = self.player.inventory.find_metals()
-        self.metals_list_view.items = ["%dx %s" % (record.count, record.item.name) for record in metal_records]
+        self.metals_list_view.items = ["%dx %s" % (record.count, item_to_string(record.item)) for record in metal_records]
         return "Wybierz metal: \n\n" + self.metals_list_view.render()
 
     def render_forging(self):
@@ -78,7 +79,7 @@ class ForgeView(View, KeyListener):
             chance_info = "Szansa na sukces: %s" % float_as_percent(chance)
 
         if self.last_product:
-            product_info = "\n\n\tWytworzyłeś: [%s (%d)]!" % (self.last_product.name, self.last_product.rating)
+            product_info = "\n\n\tWytworzyłeś: %s!" % (item_to_string(self.last_product, embedded=True, verbose=True))
 
         return chance_info + product_info
 
@@ -88,9 +89,9 @@ class ForgeView(View, KeyListener):
         w = ""
         o = ""
         if self.current_choice.recipe:
-            r = "Przepis: %s" % self.current_choice.recipe.product_name.capitalize()
+            r = "Przepis: %s" % item_to_string(self.current_choice.recipe, embedded=True)
         if self.current_choice.metal:
-            m = " + %s" % self.current_choice.metal.item.name
+            m = " + %s" % item_to_string(self.current_choice.metal.item, embedded=True)
         if self.current_choice.recipe and self.current_choice.metal:
             w = "\n\tMateriały: %d / %d" % (self.current_choice.metal.count, self.current_choice.recipe.size)
         if self.can_forge():

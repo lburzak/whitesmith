@@ -25,7 +25,7 @@ def get_item_core(item: Any) -> str:
     if isinstance(item, Metal):
         return item.name
     elif isinstance(item, Recipe):
-        return item.product_name
+        return item.product_name.capitalize()
     elif isinstance(item, Product):
         return item.name
     else:
@@ -65,7 +65,7 @@ def item_to_string(item: Any, embedded: bool = False, type_tag: bool = False, ve
     core = get_item_core(item)
     tag = get_type_tag(item) + " " if type_tag else ""
     additional_info = get_additional_info(item) if verbose else ""
-    compound =  tag + core + additional_info
+    compound = tag + core + additional_info
     enclosed = "[%s]" % compound if embedded else compound
     formatted = with_formatting(enclosed, get_item_rarity(item))
     return formatted
