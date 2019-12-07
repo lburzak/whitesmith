@@ -1,2 +1,5 @@
 venv-new/
 .idea/
+__pycache__/
+presentation/__pycache__
+data/__pycache__
