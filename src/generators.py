@@ -1,11 +1,12 @@
 from random import randint
 
 from lang import generate_metal_name
-from items import Metal, Rarity, rarityRanges
+from items import Metal, Rarity
 
 
 def random_rarity(rarity: Rarity):
-    bottom, top = rarityRanges[rarity]
+    print(Rarity.get_conversion_ranges())
+    bottom, top = Rarity.get_conversion_ranges()[rarity]
     return randint(bottom, top)
 
 

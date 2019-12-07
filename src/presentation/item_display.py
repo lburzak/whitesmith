@@ -2,7 +2,7 @@ from typing import Any
 
 import colorama
 
-from items import Metal, Product, Rarity, rarity_from_number, Recipe
+from items import Metal, Product, Rarity, Recipe
 
 
 def with_formatting(string: str, rarity: Rarity) -> str:
@@ -51,7 +51,7 @@ def get_additional_info(item: Any) -> str:
 
 def get_item_rarity(item: Any) -> Rarity:
     if isinstance(item, Metal):
-        return rarity_from_number(item.rarity)
+        return Rarity.from_number(item.rarity)
     elif isinstance(item, Recipe):
         return Rarity.COMMON
     elif isinstance(item, Product):

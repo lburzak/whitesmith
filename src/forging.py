@@ -2,10 +2,16 @@ from dataclasses import dataclass
 from typing import Optional
 from random import randint
 
-from items import Metal, Product, rarity_from_number, Rarity, Recipe
+from items import Metal, Product, Rarity, Recipe
 from player import Player
 from resources import Resources
 import lang
+
+
+RATING_MULTIPLIER_METAL = 3.2
+RATING_MULTIPLIER_DIFFICULTY = 2
+RATING_MULTIPLIER_SIZE = 0.2
+SCRAP = Product(name="Odłamek", rating=0, rarity=Rarity.TRASH)
 
 
 @dataclass
@@ -43,11 +49,6 @@ def calculate_forging_success_chance(level: int, difficulty: int):
     threshold = get_threshold(rel_level)
     return threshold.base_chance + (rel_level - threshold.min_relative_level) * threshold.chance_gain
 
-RATING_MULTIPLIER_METAL = 3.2
-RATING_MULTIPLIER_DIFFICULTY = 2
-RATING_MULTIPLIER_SIZE = 0.2
-SCRAP = Product(name="Odłamek", rating=0, rarity=Rarity.TRASH)
-
 
 def randomize_rate(r: int):
     fluctuation = r // 5
@@ -71,7 +72,7 @@ def forge(level: int, recipe: Recipe, metal: Metal) -> Product:
     if rand > 100 - (chance * 100):
         actual_rate = rate(effective_difficulty, metal.rarity, recipe.size)
         name = lang.noun_to_adj(metal.name, recipe.product_name).capitalize() + " " + recipe.product_name.capitalize()
-        return Product(name=name, rating=actual_rate, rarity=rarity_from_number(metal.rarity))
+        return Product(name=name, rating=actual_rate, rarity=Rarity.from_number(metal.rarity))
     else:
         return SCRAP
 

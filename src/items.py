@@ -10,6 +10,24 @@ class Rarity(Enum):
     LEGENDARY = 4
     TRASH = 5
 
+    @staticmethod
+    def get_conversion_ranges():
+        return {
+            Rarity.TRASH: (0, 0),
+            Rarity.COMMON: (1, 10),
+            Rarity.UNCOMMON: (10, 30),
+            Rarity.RARE: (30, 50),
+            Rarity.EPIC: (50, 80),
+            Rarity.LEGENDARY: (80, 100)
+        }
+
+    @staticmethod
+    def from_number(rarity_number: int):
+        for rarity, (bottom, top) in Rarity.get_conversion_ranges().items():
+            if bottom <= rarity_number <= top:
+                return rarity
+        return None
+
 
 @dataclass
 class Metal:
@@ -30,17 +48,3 @@ class Recipe:
     product_name: str
     difficulty: int
     size: int
-
-rarityRanges = {
-    Rarity.TRASH: (0, 0),
-    Rarity.COMMON: (1, 10),
-    Rarity.UNCOMMON: (10, 30),
-    Rarity.RARE: (30, 50),
-    Rarity.EPIC: (50, 80),
-    Rarity.LEGENDARY: (80, 100)
-}
-
-def rarity_from_number(rarity_number: int) -> Rarity:
-    for rarity, (bottom, top) in rarityRanges.items():
-        if bottom <= rarity_number <= top:
-            return rarity
