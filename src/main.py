@@ -1,15 +1,15 @@
-from forge_view import ForgeView
+from presentation.forge_view import ForgeView
+from presentation.market_view import MarketView
+from presentation.menu_view import MenuView
+from presentation.mine_view import MineView
+from presentation.top_bar_view import TopBarView
+from presentation.views_root import ViewsRoot
+from presentation.inventory_view import InventoryView
 from inventory import Inventory
-from inventory_view import InventoryView
 from market import Market
-from market_view import MarketView
-from menu_view import MenuView
-from mine_view import MineView
 from mining import Mine
 from player import Player
 from resources import generate_resources
-from top_bar_view import TopBarView
-from views_root import ViewsRoot
 
 resources = generate_resources()
 mine = Mine(resources)

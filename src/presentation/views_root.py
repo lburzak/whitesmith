@@ -3,19 +3,9 @@ from typing import Union, Dict
 
 from readchar import readkey, key
 
-from controls_bar import ControlsBar
-from forge_view import ForgeView
-from inventory import Inventory
-from inventory_view import InventoryView
-from market import Market
-from market_view import MarketView
-from menu_view import MenuView
-from mine_view import MineView
-from mining import Mine
-from player import Player
-from resources import Resources
-from top_bar_view import TopBarView
-from view import View, KeyListener
+from presentation.controls_bar import ControlsBar
+from presentation.top_bar_view import TopBarView
+from presentation.view import View, KeyListener
 
 
 class ViewsRoot:

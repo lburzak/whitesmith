@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from operator import attrgetter
 from typing import Any, Dict, Optional
-from metal import Metal
-from product import Product
+
+from items import Metal, Product
 from resources import ResourceRecord
 
 

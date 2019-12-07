@@ -4,10 +4,10 @@ from typing import Callable
 from readchar import key
 
 from inventory import Inventory
-from item_display import item_to_string
-from list_view import ListView
-from view import View, KeyListener
-from item_inspect_view import ItemInspectView
+from presentation.item_display import item_to_string
+from presentation.list_view import ListView
+from presentation.view import View, KeyListener
+from presentation.item_inspect_view import ItemInspectView
 
 
 class InventoryView(View, KeyListener):

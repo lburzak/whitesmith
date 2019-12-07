@@ -1,4 +1,4 @@
-from recipe import Recipe
+from items import Recipe
 
 recipes = [
     Recipe("młotek", 2, 3),

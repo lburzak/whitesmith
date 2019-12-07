@@ -1,24 +1,20 @@
 from dataclasses import dataclass
 from enum import Enum
-from operator import attrgetter
 from typing import Callable, Optional
 
-from readchar import key
+import readchar
 
-from chance import calculate_forging_success_chance
+from presentation.item_display import item_to_string
+from presentation.item_inspect_view import ItemInspectView
+from presentation.list_view import ListView
+from presentation.view import View, KeyListener
 from data.recipes import recipes
-from forging import forge, get_effective_difficulty, produce, SCRAP
-from inventory import Inventory, InventoryRecord
-from item_display import item_to_string
-from item_inspect_view import ItemInspectView
-from list_view import ListView
-from metal import Metal
 from player import Player
-from product import Product
-from recipe import Recipe
+from items import Product, Recipe
 from resources import Resources
+from forging import get_effective_difficulty, produce, SCRAP, calculate_forging_success_chance
+from inventory import InventoryRecord
 from util import float_as_percent
-from view import View, KeyListener
 
 
 @dataclass
@@ -142,15 +138,15 @@ class ForgeView(View, KeyListener):
         if self.current_stage != ForgingStage.CHOOSING_RECIPE:
             self.current_stage = ForgingStage(self.current_stage.value - 1)
 
-    def on_key(self, k: key):
-        if k == key.UP:
+    def on_key(self, k: readchar.key):
+        if k == readchar.key.UP:
             self.handle_up()
-        elif k == key.DOWN:
+        elif k == readchar.key.DOWN:
             self.handle_down()
-        elif k == key.ENTER:
+        elif k == readchar.key.ENTER:
             self.handle_confirm()
-        elif k == key.LEFT:
+        elif k == readchar.key.LEFT:
             self.prev_stage()
-        elif k == key.RIGHT:
+        elif k == readchar.key.RIGHT:
             self.next_stage()
         self.on_change()

@@ -2,8 +2,7 @@ from dataclasses import dataclass
 from typing import Dict, Any, Optional
 
 from generators import generate_metal
-from metal import Metal
-from rarity import Rarity
+from items import Metal, Rarity
 
 
 @dataclass

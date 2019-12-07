@@ -2,12 +2,12 @@ from typing import Callable
 
 from readchar import key
 
+from presentation.item_display import item_to_string
+from presentation.list_view import ListView
+from presentation.view import View, KeyListener
 from inventory import InventoryRecord
-from item_display import item_to_string
-from list_view import ListView
 from market import Market
 from player import Player
-from view import View, KeyListener
 
 
 class MarketView(View, KeyListener):

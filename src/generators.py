@@ -1,8 +1,7 @@
-from lang import generate_metal_name
 from random import randint
 
-from metal import Metal
-from rarity import Rarity, rarityRanges
+from lang import generate_metal_name
+from items import Metal, Rarity, rarityRanges
 
 
 def random_rarity(rarity: Rarity):

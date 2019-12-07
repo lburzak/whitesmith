@@ -3,8 +3,8 @@ from typing import Callable
 
 from readchar import key
 
-from list_view import ListView
-from view import View, KeyListener
+from presentation.list_view import ListView
+from presentation.view import View, KeyListener
 
 
 @dataclass

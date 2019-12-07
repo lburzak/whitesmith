@@ -1,6 +1,6 @@
 from inventory import InventoryRecord
 from player import Player
-from product import Product
+from items import Product
 
 
 class Market:

@@ -2,10 +2,7 @@ from typing import Any
 
 import colorama
 
-from metal import Metal
-from product import Product
-from rarity import Rarity, rarity_from_number
-from recipe import Recipe
+from items import Metal, Product, Rarity, rarity_from_number, Recipe
 
 
 def with_formatting(string: str, rarity: Rarity) -> str:

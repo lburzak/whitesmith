@@ -1,7 +1,5 @@
-from item_display import item_to_string
-from metal import Metal
-from product import Product
-from recipe import Recipe
+from presentation.item_display import item_to_string
+from items import Metal, Product, Recipe
 
 
 class ItemInspectView:

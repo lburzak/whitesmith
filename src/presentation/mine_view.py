@@ -1,10 +1,11 @@
 from typing import Callable
+
 from readchar import key
-from inventory import Inventory
+
 from mining import Mine
 from player import Player
-from view import View, KeyListener
-from item_display import item_to_string
+from presentation.view import View, KeyListener
+from presentation.item_display import item_to_string
 
 
 class MineView(View, KeyListener):

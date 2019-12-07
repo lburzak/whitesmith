@@ -1,8 +1,6 @@
-from functools import reduce
 from typing import List
 
-from inventory import Inventory
-from metal import Metal
+from items import Metal
 from player import Player
 from resources import Resources, ResourceRecord
 from random import randint

@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from enum import Enum
 
 
@@ -10,6 +11,26 @@ class Rarity(Enum):
     TRASH = 5
 
 
+@dataclass
+class Metal:
+    name: str
+    difficulty: int
+    rarity: int
+
+
+@dataclass
+class Product:
+    name: str
+    rating: int
+    rarity: Rarity
+
+
+@dataclass
+class Recipe:
+    product_name: str
+    difficulty: int
+    size: int
+
 rarityRanges = {
     Rarity.TRASH: (0, 0),
     Rarity.COMMON: (1, 10),
@@ -18,7 +39,6 @@ rarityRanges = {
     Rarity.EPIC: (50, 80),
     Rarity.LEGENDARY: (80, 100)
 }
-
 
 def rarity_from_number(rarity_number: int) -> Rarity:
     for rarity, (bottom, top) in rarityRanges.items():

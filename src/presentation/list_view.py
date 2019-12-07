@@ -1,4 +1,4 @@
-from view import View
+from presentation.view import View
 
 
 class ListView(View):
