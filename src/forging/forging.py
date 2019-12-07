@@ -10,9 +10,9 @@ from random import randint
 
 from resources import Resources
 
-RATING_MULTIPLIER_METAL = 20
-RATING_MULTIPLIER_DIFFICULTY = 20
-RATING_MULTIPLIER_SIZE = 4
+RATING_MULTIPLIER_METAL = 3.2
+RATING_MULTIPLIER_DIFFICULTY = 2
+RATING_MULTIPLIER_SIZE = 0.2
 SCRAP = Product(name="Odłamek", rating=0)
 
 
@@ -24,10 +24,11 @@ def randomize_rate(r: int):
     return randomized
 
 
-def rate(effective_difficulty: int, metal_rarity: int, size: int):
-    return effective_difficulty * RATING_MULTIPLIER_DIFFICULTY\
-           + metal_rarity * RATING_MULTIPLIER_METAL\
-           + size * RATING_MULTIPLIER_SIZE
+def rate(effective_difficulty: int, metal_rarity: int, size: int) -> int:
+    size_rating = size * RATING_MULTIPLIER_SIZE
+    difficulty_rating = effective_difficulty * RATING_MULTIPLIER_DIFFICULTY
+    metal_rating = metal_rarity * RATING_MULTIPLIER_METAL * RATING_MULTIPLIER_METAL
+    return round(size_rating * (difficulty_rating + metal_rating) // 10)
 
 
 def forge(level: int, recipe: Recipe, metal: Metal) -> Product:
