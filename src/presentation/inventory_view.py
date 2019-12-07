@@ -4,6 +4,7 @@ from typing import Callable
 from readchar import key
 
 from inventory import Inventory
+from item_display import item_to_string
 from list_view import ListView
 from metal import Metal
 from product import Product
@@ -33,7 +34,7 @@ class InventoryView(View, KeyListener):
 
     def render(self) -> str:
         records = sorted(list(self.inventory.get_records().values()), key=attrgetter("count"), reverse=True)
-        self.items_list_view.items = ["%dx %s" % (record.count, record.item.name) for record in records]
+        self.items_list_view.items = ["%dx %s" % (record.count, item_to_string(record.item, type_tag=True)) for record in records]
         pos = self.items_list_view.pos
         if pos < len(self.items_list_view.items):
             item = records[pos].item
