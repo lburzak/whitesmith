@@ -50,5 +50,4 @@ def generate_resources() -> Resources:
     for rarity, count in generator_conf["metals"].items():
         for i in range(0, count):
             res.register(generate_metal(rarity, 1))
-    print(res.get_metals())
     return res
