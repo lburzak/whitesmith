@@ -12,15 +12,19 @@ class ListView(View):
         self.height = height
 
     def get_last_line_index(self) -> int:
+        safe_last = len(self.items) - 1 if len(self.items) > 0 else 0
         return self.height + self.first_line_index\
-            if len(self.items) > self.height and self.height + self.first_line_index <= len(self.items) - 1\
-            else len(self.items) - 1
+            if len(self.items) > self.height and self.height + self.first_line_index <= safe_last\
+            else safe_last
 
     def adjust_position(self, last_line_index):
         if self.pos > last_line_index:
             self.pos = last_line_index
 
     def render(self) -> str:
+        if len(self.items) == 0:
+            return ""
+
         last_line_index = self.get_last_line_index()
         self.adjust_position(last_line_index)
 
