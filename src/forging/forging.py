@@ -5,6 +5,7 @@ from chance import calculate_forging_success_chance
 from metal import Metal
 from player import Player
 from product import Product
+from rarity import rarity_from_number, Rarity
 from recipe import Recipe
 from random import randint
 
@@ -13,7 +14,7 @@ from resources import Resources
 RATING_MULTIPLIER_METAL = 3.2
 RATING_MULTIPLIER_DIFFICULTY = 2
 RATING_MULTIPLIER_SIZE = 0.2
-SCRAP = Product(name="Odłamek", rating=0)
+SCRAP = Product(name="Odłamek", rating=0, rarity=Rarity.TRASH)
 
 
 def randomize_rate(r: int):
@@ -38,7 +39,7 @@ def forge(level: int, recipe: Recipe, metal: Metal) -> Product:
     if rand > 100 - (chance * 100):
         actual_rate = rate(effective_difficulty, metal.rarity, recipe.size)
         name = lang.noun_to_adj(metal.name, recipe.product_name).capitalize() + " " + recipe.product_name.capitalize()
-        return Product(name=name, rating=actual_rate)
+        return Product(name=name, rating=actual_rate, rarity=rarity_from_number(metal.rarity))
     else:
         return SCRAP
 

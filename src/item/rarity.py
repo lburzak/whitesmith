@@ -7,9 +7,11 @@ class Rarity(Enum):
     RARE = 2
     EPIC = 3
     LEGENDARY = 4
+    TRASH = 5
 
 
 rarityRanges = {
+    Rarity.TRASH: (0, 0),
     Rarity.COMMON: (1, 10),
     Rarity.UNCOMMON: (10, 30),
     Rarity.RARE: (30, 50),

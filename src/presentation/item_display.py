@@ -18,6 +18,8 @@ def with_formatting(string: str, rarity: Rarity) -> str:
         formatting += colorama.Fore.MAGENTA
     elif rarity is Rarity.LEGENDARY:
         formatting += colorama.Fore.RED
+    elif rarity is Rarity.TRASH:
+        formatting += colorama.Fore.LIGHTBLACK_EX
     return formatting + string + colorama.Style.RESET_ALL
 
 
@@ -56,7 +58,7 @@ def get_item_rarity(item: Any) -> Rarity:
     elif isinstance(item, Recipe):
         return Rarity.COMMON
     elif isinstance(item, Product):
-        return Rarity.COMMON
+        return item.rarity
     else:
         raise Exception("Not an item")
 
