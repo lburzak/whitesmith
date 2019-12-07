@@ -63,9 +63,9 @@ def get_item_rarity(item: Any) -> Rarity:
 
 def item_to_string(item: Any, embedded: bool = False, type_tag: bool = False, verbose: bool = False) -> str:
     core = get_item_core(item)
-    tag = get_type_tag(item) if type_tag else ""
+    tag = get_type_tag(item) + " " if type_tag else ""
     additional_info = get_additional_info(item) if verbose else ""
-    compound = core + tag + additional_info
+    compound =  tag + core + additional_info
     enclosed = "[%s]" % compound if embedded else compound
     formatted = with_formatting(enclosed, get_item_rarity(item))
     return formatted
