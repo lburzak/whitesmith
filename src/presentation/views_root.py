@@ -25,7 +25,7 @@ class ViewsRoot:
         self._controls_listener = new_view
 
     def change_handler(self):
-        os.system("clear")
+        os.system("cls||clear")
         controls_render = ("\n" + self.controls_bar.render(self._current_route)) if self.show_controls else "\n"
         print(self.top_bar_view.render(self._current_route) + controls_render + "\n\n" + self._current_view.render())
 
