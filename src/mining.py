@@ -25,10 +25,9 @@ class Mine:
 
     def mine(self, player: Player) -> [Metal]:
         obtained_metals = []
-        for mt in self.metals:
-            if randint(0, 1000) % self.get_effective_rarity(player, mt.data.rarity) == 0:
-                obtained_metals.append(mt)
-                player.inventory.store_item(mt, 1)
+        for metal in self.metals:
+            if randint(0, self.get_effective_rarity(player, metal.data.rarity)) == 0:
+                obtained_metals.append(metal)
+                player.inventory.store_item(metal, 1)
         player.on_mining(sum([metal.data.rarity for metal in obtained_metals]))
         return obtained_metals
-
