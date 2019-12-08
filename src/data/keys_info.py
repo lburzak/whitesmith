@@ -4,19 +4,19 @@ ROUTES_KEYS_INFO = {
         "ENTER": "Potwierdź wybór"
     },
     "Magazyn": {
-        "BACKSPACE": "Wróć do menu",
+        "BACKSPACE / ESC": "Wróć do menu",
         "↑ / ↓": "Zmień pozycję"
     },
     "Kopalnia": {
-        "BACKSPACE": "Wróć do menu",
+        "BACKSPACE / ESC": "Wróć do menu",
         "SPACJA": "Wykop"
     },
     "Bazar": {
-        "BACKSPACE": "Wróć do menu",
+        "BACKSPACE / ESC": "Wróć do menu",
         "ENTER": "Sprzedaj"
     },
     "Kuźnia": {
-        "BACKSPACE": "Wróć do menu",
+        "BACKSPACE / ESC": "Wróć do menu",
         "↑ / ↓": "Zmień pozycję",
         "← / →": "Zmień stronę",
         "ENTER": "Potwierdź wybór"
