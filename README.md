@@ -13,7 +13,7 @@ Whitesmith
 * pip
 * pipenv (`pip install pipenv`)
 
-####Przebieg
+#### Przebieg
 
 W katalogu bazowym:
 1. Zainstaluj zależności: `pipenv install`
