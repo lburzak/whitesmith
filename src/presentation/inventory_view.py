@@ -4,10 +4,10 @@ from typing import Callable
 from readchar import key
 
 from inventory import Inventory
-from presentation.item_display import item_to_string
 from presentation.list_view import ListView
 from presentation.view import View, KeyListener
 from presentation.item_inspect_view import ItemInspectView
+from presentation.util import inventory_record_to_list_row
 
 
 class InventoryView(View, KeyListener):
@@ -23,7 +23,7 @@ class InventoryView(View, KeyListener):
 
     def render(self) -> str:
         records = sorted(list(self.inventory.get_records().values()), key=attrgetter("count"), reverse=True)
-        self.items_list_view.items = ["%dx %s" % (record.count, item_to_string(record.item, type_tag=True)) for record in records]
+        self.items_list_view.items = [inventory_record_to_list_row(record) for record in records]
         pos = self.items_list_view.pos
         if pos < len(self.items_list_view.items):
             item = records[pos].item

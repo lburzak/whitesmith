@@ -9,6 +9,7 @@ from presentation.item_display import item_to_string
 from presentation.item_inspect_view import ItemInspectView
 from presentation.list_view import ListView
 from presentation.view import View, KeyListener
+from presentation.util import inventory_record_to_list_row
 from data.recipes import recipes
 from player import Player
 from items import Product, Recipe
@@ -69,7 +70,7 @@ class ForgeView(View, KeyListener):
         self.metals_list_view.adjust_position(len(records) - 1)  # suboptimal
         selected_item = records[self.metals_list_view.pos].item if len(records) > 0 else None
         metal_records = self.player.inventory.find_metals()
-        self.metals_list_view.items = ["%dx %s" % (record.count, item_to_string(record.item)) for record in metal_records]
+        self.metals_list_view.items = [inventory_record_to_list_row(record) for record in metal_records]
         return "Wybierz metal: \n\n" + self.metals_list_view.render() + "\n\n" + self.inspect_view.render(selected_item)
 
     def render_forging(self):
