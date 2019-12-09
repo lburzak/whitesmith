@@ -66,6 +66,7 @@ class ForgeView(View, KeyListener):
 
     def render_choosing_metal(self) -> str:
         records = self.player.inventory.find_metals()
+        self.metals_list_view.adjust_position(len(records) - 1)  # suboptimal
         selected_item = records[self.metals_list_view.pos].item if len(records) > 0 else None
         metal_records = self.player.inventory.find_metals()
         self.metals_list_view.items = ["%dx %s" % (record.count, item_to_string(record.item)) for record in metal_records]
