@@ -1,4 +1,5 @@
 import os
+import sys
 from typing import Union, Dict
 
 from readchar import readkey, key
@@ -16,6 +17,7 @@ class ViewsRoot:
     top_bar_view: TopBarView
     controls_bar = ControlsBar()
     show_controls = False
+    clear_command = "cls" if sys.platform == "windows" else "clear"
 
     def set_routes(self, routes: Dict[str, View]):
         self._routes = routes
@@ -24,8 +26,11 @@ class ViewsRoot:
         self._current_view = new_view
         self._controls_listener = new_view
 
+    def clear_display(self):
+        os.system(self.clear_command)
+
     def change_handler(self):
-        os.system("cls||clear")
+        self.clear_display()
         controls_render = ("\n" + self.controls_bar.render(self._current_route)) if self.show_controls else "\n"
         print(self.top_bar_view.render(self._current_route) + controls_render + "\n\n" + self._current_view.render())
 
