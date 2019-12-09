@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
+from operator import attrgetter
 from typing import Callable, Optional
 
 import readchar
@@ -30,7 +31,7 @@ class ForgingStage(Enum):
 
 
 class ForgeView(View, KeyListener):
-    loaded_recipes = recipes
+    loaded_recipes = sorted(recipes, key=attrgetter("difficulty"))
     player: Player
     recipes_list_view = ListView([item_to_string(recipe) for recipe in loaded_recipes])
     metals_list_view = ListView([])
