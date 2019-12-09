@@ -5,7 +5,6 @@ from items import Metal, Rarity
 
 
 def random_rarity(rarity: Rarity):
-    print(Rarity.get_conversion_ranges())
     bottom, top = Rarity.get_conversion_ranges()[rarity]
     return randint(bottom, top)
 
