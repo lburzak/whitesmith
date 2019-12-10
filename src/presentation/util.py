@@ -1,5 +1,5 @@
 from inventory import InventoryRecord
-from item_display import item_to_string
+from presentation.item_display import item_to_string
 
 
 def inventory_record_to_list_row(record: InventoryRecord, type_tag: bool = False, verbose: bool = False) -> str:
