@@ -17,7 +17,7 @@ class ViewsRoot:
     top_bar_view: TopBarView
     controls_bar = ControlsBar()
     show_controls = False
-    clear_command = "cls" if sys.platform == "windows" else "clear"
+    clear_command = "cls" if os.name == "nt" else "clear"
 
     def set_routes(self, routes: Dict[str, View]):
         self._routes = routes
